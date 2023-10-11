@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API } from '../service/api.service';
@@ -35,7 +35,8 @@ export function UserProvider({ children }) {
 }
 
 export const useUser = () => {
-  const [authentication, setAuthentication] = useContext(UserContext);
+  const [success, setSuccess] = React.useState(false);
+  const [authentication, setAuthentication] = React.useContext(UserContext);
 
   /** @param {LoginDto} body */
   const login = async (body) => {
@@ -66,12 +67,13 @@ export const useUser = () => {
 
   const checkAuth = async () => {
     const token = await AsyncStorage.getItem('token');
-    if (token && !authentication.auth) {
+    if (token && !authentication.auth && !success) {
       setAuthentication({
         auth: true,
         jwt: token,
       });
     }
+    setSuccess(true);
   };
 
   return {
@@ -81,6 +83,7 @@ export const useUser = () => {
     isAuth: authentication.auth,
     token: authentication.jwt,
     checkAuth,
+    success,
   };
 };
 

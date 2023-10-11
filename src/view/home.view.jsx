@@ -1,6 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { useUser } from '../context/user.context';
 
 export default function HomeView() {
@@ -11,7 +10,7 @@ export default function HomeView() {
   };
 
   return (
-    <SafeAreaView>
+    <View>
       <Text>
         Token:
         {token ?? ' Empty'}
@@ -24,6 +23,6 @@ export default function HomeView() {
       <TouchableOpacity>
         <Text>Welcome</Text>
       </TouchableOpacity>
-    </SafeAreaView>
+    </View>
   );
 }
